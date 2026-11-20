@@ -1,0 +1,26 @@
+# Dependencies and build output
+node_modules/
+pnpm-lock.yaml
+
+# Backups written by install/uninstall scripts into the target profile
+.install-backup/
+.uninstall-backup/
+.profile-backup-*/
+
+# Isolated-verification scratch output (screenshots are evidence, not source)
+verify-isolated-*.png
+verify-isolated-*.log
+.verify-tmp/
+
+# Editors and OS
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Logs and temporary files
+*.log
+*.tmp
+~$*

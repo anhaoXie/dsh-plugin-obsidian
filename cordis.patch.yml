@@ -1,0 +1,10 @@
+# dsh-plugin-obsidian bundle patch - a self-naming insert row.
+#
+# The row id, the package name and the browser module id are deliberately the
+# same string: the modules node half mounts a package's browser half on the
+# Loader row whose specifier equals the package name, and serves that module
+# under its id. Making all three coincide removes a whole class of mounts that
+# silently never activate.
+- insert:
+    - id: dsh-plugin-obsidian
+      name: dsh-plugin-obsidian
