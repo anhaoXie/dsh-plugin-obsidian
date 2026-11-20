@@ -22,13 +22,13 @@ Obsidian 侧联动通过 `obsidian://` URI 打开笔记（Obsidian 会自己热�
 |---|---|
 | OS / shell | Windows 10/11，PowerShell 5.1 与 pwsh 7 都要能跑安装脚本 |
 | Node | `v24.21.0`（`resources\runtime\bin\node.cmd`） |
-| DSH 安装 | `C:\Users\谢安豪\AppData\Local\Programs\DeepSeek Harness` |
+| DSH 安装 | `%LOCALAPPDATA%\Programs\DeepSeek Harness` |
 | DSH CLI | `...\resources\runtime\cli\bin\dsh.cmd`（`dsh web --port 0 --no-open`、`dsh plugin --profile <name> add <path>`） |
 | DSH runtime pnpm | `...\resources\runtime\primary-runtime\dependencies\pnpm\bin\pnpm.mjs`（用 `node <pnpm.mjs> install`） |
-| DSH_HOME | `C:\Users\谢安豪\.dsh`（`profiles\desktop`、`profiles\web`） |
+| DSH_HOME | `%USERPROFILE%\.dsh`（`profiles\desktop`、`profiles\web`） |
 | 已装插件参考实现 | `<DSH_HOME>\profiles\desktop\node_modules\dsh-plugin-undermind\lib\index.js`（host 注册 tools + webServer 路由）、`dsh-skill-manager\lib\index.js|client.js`（最小完整双半区插件） |
-| Obsidian 安装 | `C:\Users\谢安豪\AppData\Local\Programs\Obsidian\Obsidian.exe`（当前未运行） |
-| Obsidian vault | `C:\Users\谢安豪\Documents\Obsidian Vault`（`%APPDATA%\obsidian\obsidian.json` 注册，`open:true`；**只有这一个**） |
+| Obsidian 安装 | `%LOCALAPPDATA%\Programs\Obsidian\Obsidian.exe`（当前未运行） |
+| Obsidian vault | `%USERPROFILE%\Documents\Obsidian Vault`（`%APPDATA%\obsidian\obsidian.json` 注册，`open:true`；**只有这一个**） |
 | vault 结构 | `00-收件箱/`、`01-笔记/`、`02-资源/`、`03-归档/`、`日记/`、`模板/`、`欢迎.md`、`首页.md`；`.obsidian/` 下 `app.json`、`core-plugins.json` 等；**无社区插件、无 daily-notes.json** |
 | 插件安装形态 | profile `package.json`：`dependencies` 加 `"dsh-plugin-obsidian": "link:<repo abs path>"`；`dsh.profile.bundles` 末尾加 `"dsh-plugin-obsidian"`；然后 `node <pnpm.mjs> install` |
 
@@ -322,7 +322,7 @@ export function createApi(ctx, { getVault, getConfig }) -> { handle(req, res): P
 2. `dsh plugin --profile web add <repo>`（官方 CLI 路径，验证「可被官方 CLI 安装」；失败则退回 `install.ps1 -ProfileDir <临时 profile>` + pnpm）。
 3. `dsh web --port <空闲端口> --no-open` 后台启动，从 stdout 抓 URL（含 token）；等待 `/` 可访问。
 4. 用本机 Chromium（探测 `C:\Program Files\Google\Chrome\Application\chrome.exe`、Edge、
-   `C:\Users\谢安豪\AppData\Local\Programs\...`）headless + CDP：打开 URL → 等 `[data-obsidian-panel="root"]` →
+   `%LOCALAPPDATA%\Programs\...`）headless + CDP：打开 URL → 等 `[data-obsidian-panel="root"]` →
    断言 `data-obsidian-state="ready"` → 读 `data-obsidian-vault` → 点「新建笔记」流程（先在**临时 vault** 上，
    用 `--vault-path` 注入临时 vault；不要写真实 vault！）→ 断言新笔记出现在树/内容区 → 截图存 `verify-isolated-*.png`。
 5. 通过页面 `fetch('/dsh-obsidian/api/health')` 断言 `toolsRegistered` 数量 === 10。

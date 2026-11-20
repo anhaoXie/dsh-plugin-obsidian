@@ -107,7 +107,7 @@ uninstall.ps1 -RemoveNodeModules               # 连 node_modules 里的链接�
 
 优先级：**profile 行 config 的 `vaultPath`** > 环境变量 **`DSH_OBSIDIAN_VAULT`** > 自动发现
 （读 `%APPDATA%\obsidian\obsidian.json`，取 `open: true` 的仓库）。
-本机自动发现结果就是 `C:\Users\谢安豪\Documents\Obsidian Vault`，通常不需要配置。
+本机自动发现结果就是 `C:\Users\<用户名>\Documents\Obsidian Vault`，通常不需要配置。
 
 日记配置自动读 `.obsidian/daily-notes.json`（folder / format / template），缺省为仓库根、`YYYY-MM-DD`。
 
@@ -181,7 +181,7 @@ tools\verify-isolated.cmd
 
 `install.ps1` 已装进真实 desktop profile：
 `.install-backup\20261120-133827\` 有原始 `package.json` 备份；安装后 JSON 无 BOM、
-`dependencies.dsh-plugin-obsidian = link:C:/Users/谢安豪/.../dsh-plugin-obsidian`、
+`dependencies.dsh-plugin-obsidian = link:C:/Users/<用户名>/.../dsh-plugin-obsidian`、
 `dsh.profile.bundles` 末尾新增 `dsh-plugin-obsidian`（22 项）、pnpm exit 0 并建好 Junction。
 
 **当前正在运行的 DSH 实例是在安装之前启动的，所以刷新/重启后才会出现面板与工具。**
